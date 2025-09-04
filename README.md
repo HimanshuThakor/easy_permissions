@@ -1,4 +1,4 @@
-# 📖 Flutter Easy Permissions
+# 📖 Flutter Easy Permissions Manager
 
 A simple wrapper around [`permission_handler`](https://pub.dev/packages/permission_handler) that makes requesting permissions in Flutter apps **easy and developer-friendly**.  
 
@@ -21,4 +21,4 @@ A simple wrapper around [`permission_handler`](https://pub.dev/packages/permissi
 Add dependency in your `pubspec.yaml`:
 ```yaml
 dependencies:
-  flutter_easy_permissions: ^0.0.1
+  flutter_easy_permission_manager: ^0.0.1

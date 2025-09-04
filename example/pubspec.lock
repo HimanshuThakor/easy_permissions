@@ -54,7 +54,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_easy_permissions:
+  flutter_easy_permission_manager:
     dependency: "direct main"
     description:
       path: ".."

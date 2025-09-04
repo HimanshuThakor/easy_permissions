@@ -1,4 +1,4 @@
-import 'package:flutter_easy_permissions/flutter_easy_permissions.dart';
+import 'package:flutter_easy_permission_manager/flutter_easy_permission_manager.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permission_handler/permission_handler.dart';
 
