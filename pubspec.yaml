@@ -24,6 +24,7 @@ dev_dependencies:
 
 executables:
   auto_inject_permissions: bin/auto_inject_permissions.dart
+  permissions_cli: helpers/bin/permissions_cli.dart
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
