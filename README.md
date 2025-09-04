@@ -58,11 +58,3 @@ if (result.allGranted) {
 }
 
 ---
-
-
-# 🚀 Getting Started
-
-Add dependency in your `pubspec.yaml`:
-```yaml
-dependencies:
-  flutter_easy_permission_manager: ^0.0.1
