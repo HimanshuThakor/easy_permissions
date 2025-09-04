@@ -1,6 +1,6 @@
 name: flutter_easy_permission_manager
 description: "A simple wrapper around permission_handler that makes permission requests easier, with helpful error messages when AndroidManifest.xml or Info.plist entries are missing."
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/HimanshuThakorAlinea/easy_permissions
 repository: https://github.com/HimanshuThakorAlinea/easy_permissions
 issue_tracker: https://github.com/HimanshuThakorAlinea/easy_permissions/issues
