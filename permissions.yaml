@@ -1,0 +1,9 @@
+permissions:
+  - camera
+  - microphone
+  - location
+  - photos
+  - bluetooth
+  - notifications
+  - contacts
+  - calendar
