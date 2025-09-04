@@ -1,5 +1,5 @@
-import 'package:easy_permissions/flutter_easy_permissions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easy_permissions/flutter_easy_permissions.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text("Easy Permissions Example")),
+        appBar: AppBar(title: const Text("Flutter Easy Permissions Example")),
         body: Center(
           child: ElevatedButton(
             onPressed: () async {
