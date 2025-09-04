@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:easy_permissions/easy_permissions.dart';
+import 'package:easy_permissions/flutter_easy_permissions.dart';
 
 void main() {
   group('PermissionResult', () {

@@ -1,4 +1,4 @@
-# 📖 Easy Permissions – Supported Permissions
+# 📖 Flutter Easy Permissions – Supported Permissions
 
 This package simplifies permission handling in Flutter.  
 When a permission is missing from **AndroidManifest.xml** or **Info.plist**,  

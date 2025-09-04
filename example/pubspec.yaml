@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   permission_handler: ^12.0.1
-  easy_permissions:
+  flutter_easy_permissions:
     path: ../
 
 
