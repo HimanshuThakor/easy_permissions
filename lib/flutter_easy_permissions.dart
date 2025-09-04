@@ -1,4 +1,4 @@
-library easy_permissions;
+library flutter_easy_permissions;
 
 import 'package:permission_handler/permission_handler.dart';
 

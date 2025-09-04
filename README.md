@@ -1,39 +1,24 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# 📖 Easy Permissions
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+A simple wrapper around [`permission_handler`](https://pub.dev/packages/permission_handler) that makes requesting permissions in Flutter apps **easy and developer-friendly**.  
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+- 🚀 Request multiple permissions with a single call  
+- ⚡ Provides clear error messages when `AndroidManifest.xml` or `Info.plist` entries are missing  
+- 🛡️ Helps you avoid common mistakes when handling permissions  
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+---
 
-## Features
+## ✨ Features
+- Request **single or multiple permissions**  
+- Automatically checks if **permissions are declared properly** in Android/iOS configs  
+- Provides **ready-to-copy XML/Plist entries** when missing  
+- Clean and minimal API  
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+---
 
-## Getting started
+## 🚀 Getting Started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+Add dependency in your `pubspec.yaml`:
+```yaml
+dependencies:
+  easy_permissions: ^0.0.1
