@@ -48,27 +48,101 @@ class AutoPermissionInjector {
 
   static Map<Permission, Map<String, String>> _permissionMap = {
     Permission.camera: {
-      'android': '<uses-permission android:name="android.permission.CAMERA"/>',
+      'android': '<uses-permission android:name="android.permission.CAMERA" />',
       'ios':
-          '<key>NSCameraUsageDescription</key><string>We need camera access</string>',
+          '<key>NSCameraUsageDescription</key><string>App needs camera access.</string>',
     },
     Permission.microphone: {
       'android':
-          '<uses-permission android:name="android.permission.RECORD_AUDIO"/>',
+          '<uses-permission android:name="android.permission.RECORD_AUDIO" />',
       'ios':
-          '<key>NSMicrophoneUsageDescription</key><string>We need microphone access</string>',
+          '<key>NSMicrophoneUsageDescription</key><string>App needs mic access.</string>',
+    },
+    Permission.photos: {
+      'android':
+          '<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />',
+      'ios':
+          '<key>NSPhotoLibraryUsageDescription</key><string>Access to photos.</string>',
+    },
+    Permission.mediaLibrary: {
+      'android':
+          '<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />',
+      'ios':
+          '<key>NSAppleMusicUsageDescription</key><string>Access to music.</string>',
     },
     Permission.locationWhenInUse: {
       'android':
-          '<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>',
+          '<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />',
       'ios':
-          '<key>NSLocationWhenInUseUsageDescription</key><string>We need location access</string>',
+          '<key>NSLocationWhenInUseUsageDescription</key><string>Access location.</string>',
+    },
+    Permission.locationAlways: {
+      'android':
+          '<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />',
+      'ios':
+          '<key>NSLocationAlwaysAndWhenInUseUsageDescription</key><string>Background location.</string>',
+    },
+    Permission.bluetooth: {
+      'android':
+          '<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />',
+      'ios':
+          '<key>NSBluetoothAlwaysUsageDescription</key><string>Bluetooth access.</string>',
     },
     Permission.contacts: {
       'android':
-          '<uses-permission android:name="android.permission.READ_CONTACTS"/>',
+          '<uses-permission android:name="android.permission.READ_CONTACTS" />',
       'ios':
-          '<key>NSContactsUsageDescription</key><string>We need contacts access</string>',
+          '<key>NSContactsUsageDescription</key><string>Access to contacts.</string>',
+    },
+    Permission.calendar: {
+      'android':
+          '<uses-permission android:name="android.permission.READ_CALENDAR" />',
+      'ios':
+          '<key>NSCalendarsUsageDescription</key><string>Access to calendar.</string>',
+    },
+    Permission.reminders: {
+      'ios':
+          '<key>NSRemindersUsageDescription</key><string>Access to reminders.</string>',
+    },
+    Permission.activityRecognition: {
+      'android':
+          '<uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />',
+      'ios':
+          '<key>NSMotionUsageDescription</key><string>Access to motion sensors.</string>',
+    },
+    Permission.notification: {
+      'ios':
+          '<key>NSUserNotificationUsageDescription</key><string>Send notifications.</string>',
+    },
+    Permission.sms: {
+      'android':
+          '<uses-permission android:name="android.permission.SEND_SMS" />',
+    },
+    Permission.storage: {
+      'android':
+          '<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />',
+      'ios':
+          '<key>NSPhotoLibraryUsageDescription</key><string>Access to photos/media.</string>',
+    },
+    Permission.ignoreBatteryOptimizations: {
+      'android':
+          '<uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />',
+    },
+    Permission.systemAlertWindow: {
+      'android':
+          '<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />',
+    },
+    Permission.requestInstallPackages: {
+      'android':
+          '<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />',
+    },
+    Permission.accessMediaLocation: {
+      'android':
+          '<uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />',
+    },
+    Permission.nearbyWifiDevices: {
+      'android':
+          '<uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" />',
     },
   };
 
