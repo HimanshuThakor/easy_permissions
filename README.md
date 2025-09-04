@@ -16,13 +16,6 @@ A simple wrapper around [`permission_handler`](https://pub.dev/packages/permissi
 
 ---
 
-
-This package simplifies permission handling in Flutter.  
-When a permission is missing from **AndroidManifest.xml** or **Info.plist**,  
-the package will throw an error with **ready-to-copy XML/Plist entries**.
-
----
-
 ## ✅ Permissions Mapping (Android & iOS)
 
 | Permission                    | Android Manifest                                                                 | iOS Info.plist                                                                 |
@@ -67,8 +60,7 @@ if (result.allGranted) {
 ---
 
 
-
-## 🚀 Getting Started
+# 🚀 Getting Started
 
 Add dependency in your `pubspec.yaml`:
 ```yaml
