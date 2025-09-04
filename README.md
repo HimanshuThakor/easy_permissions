@@ -66,6 +66,8 @@ if (result.allGranted) {
 
 ---
 
+
+
 ## 🚀 Getting Started
 
 Add dependency in your `pubspec.yaml`:
