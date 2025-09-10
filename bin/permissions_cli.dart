@@ -85,21 +85,69 @@ List<Permission> _parsePermissions(List<String> permissionNames) {
         permissions.add(Permission.microphone);
         break;
       case 'location':
+      case 'locationwheninuse':
         permissions.add(Permission.locationWhenInUse);
         break;
+      case 'locationalways':
+        permissions.add(Permission.locationAlways);
+        break;
       case 'photos':
+      case 'photo':
         permissions.add(Permission.photos);
+        break;
+      case 'videos':
+        permissions.add(Permission.videos);
+        break;
+      case 'audio':
+        permissions.add(Permission.audio);
         break;
       case 'contacts':
         permissions.add(Permission.contacts);
+        break;
+      case 'calendar':
+        permissions.add(Permission.calendar);
+        break;
+      case 'reminders':
+        permissions.add(Permission.reminders);
+        break;
+      case 'sensors':
+      case 'activity':
+        permissions.add(Permission.sensors);
         break;
       case 'bluetooth':
         permissions.add(Permission.bluetooth);
         break;
       case 'notification':
+      case 'notifications':
         permissions.add(Permission.notification);
         break;
-      // Add more mappings as needed
+      case 'sms':
+        permissions.add(Permission.sms);
+        break;
+      case 'storage':
+        permissions.add(Permission.storage);
+        break;
+      case 'ignore-battery-optimizations':
+      case 'ignorebatteryoptimizations':
+        permissions.add(Permission.ignoreBatteryOptimizations);
+        break;
+      case 'system-alert-window':
+      case 'systemalertwindow':
+        permissions.add(Permission.systemAlertWindow);
+        break;
+      case 'request-install-packages':
+      case 'requestinstallpackages':
+        permissions.add(Permission.requestInstallPackages);
+        break;
+      case 'access-media-location':
+      case 'accessmedialocation':
+        permissions.add(Permission.accessMediaLocation);
+        break;
+      case 'nearby-wifi-devices':
+      case 'nearbywifidevices':
+        permissions.add(Permission.nearbyWifiDevices);
+        break;
+
       default:
         print('⚠️  Unknown permission: $name');
     }
