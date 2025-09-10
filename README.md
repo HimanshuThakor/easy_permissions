@@ -49,8 +49,7 @@ A simple wrapper around [`permission_handler`](https://pub.dev/packages/permissi
 ```dart
 final result = await EasyPermissions.request([
   Permission.camera,
-  Permission.microphone,
-  Permission.locationWhenInUse,
+  Permission.microphone
 ]);
 
 if (result.allGranted) {
