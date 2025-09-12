@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_easy_permission_manager/flutter_easy_permission_manager.dart';
 import '../utils/permission_logger.dart';
 import 'auto_permission_injector.dart';
@@ -17,13 +18,13 @@ class EasyPermissions {
   static void initializeLogging({Level level = Level.INFO}) {
     Logger.root.level = level;
     Logger.root.onRecord.listen((record) {
-      print(
+      stdout.write(
           '${record.level.name}: ${record.time}: ${record.loggerName}: ${record.message}');
       if (record.error != null) {
-        print('  Error: ${record.error}');
+        stdout.write('  Error: ${record.error}');
       }
       if (record.stackTrace != null) {
-        print('  StackTrace: ${record.stackTrace}');
+        stdout.write('  StackTrace: ${record.stackTrace}');
       }
     });
     _logger.info('EasyPermissions logging initialized.');
@@ -60,7 +61,7 @@ class EasyPermissions {
       }
       _logger.warning('Error processing permissions (suppressed): $e', e, s);
       if (configToUse.enableLogging && e is! PermissionException) {
-        print('Warning: Error processing permissions: $e');
+        stdout.write('Warning: Error processing permissions: $e');
       }
     }
 
@@ -177,7 +178,7 @@ class EasyPermissions {
         if (config.openSettingsOnPermanentDenial) {
           if (config.enableLogging) {
             // Keep existing print for consistency or replace
-            print(
+            stdout.write(
                 'Opening app settings for permanently denied permission: $permission');
           }
           _logger.info(
@@ -201,8 +202,8 @@ class EasyPermissions {
             .add(permission); // Add to undeclared as it was missing initially
 
         // Keep existing prints for user feedback, or integrate into a more formal user notification system
-        print('\n🚀 Permission $permission was auto-injected!');
-        print('⚠️  Please restart your app to use the permission.');
+        stdout.write('\n🚀 Permission $permission was auto-injected!');
+        stdout.write('⚠️  Please restart your app to use the permission.');
 
         if (!config.throwOnUndeclaredPermission) {
           _logger.info(
@@ -415,84 +416,3 @@ class EasyPermissions {
     }
   }
 }
-
-// Assuming these exception classes are defined elsewhere (as in your context)
-// For example:
-// class PermissionException implements Exception {
-//   final Permission permission;
-//   final String message;
-//   PermissionException(this.permission, this.message);
-//   @override
-//   String toString() => '$runtimeType: $message (Permission: $permission)';
-// }
-
-// class PermissionNotDeclaredException extends PermissionException {
-//   final String androidHelp;
-//   final String iosHelp;
-//   PermissionNotDeclaredException({
-//     required Permission permission,
-//     this.androidHelp = "",
-//     this.iosHelp = "",
-//   }) : super(permission, "Permission $permission is not declared in the manifest.");
-// }
-
-// class PermissionTimeoutException extends PermissionException {
-//   PermissionTimeoutException(Permission permission)
-//       : super(permission, "Timeout waiting for permission $permission request.");
-// }
-
-// --- Helper stubs for classes/methods used in EasyPermissions ---
-// These would be part of your actual flutter_easy_permission_manager or permission_handler
-// enum Permission { camera, photos, location } // Example
-// enum PermissionStatus { granted, denied, permanentlyDenied, restricted, limited }
-
-// extension PermissionStatusGetters on PermissionStatus {
-//   bool get isGranted => this == PermissionStatus.granted;
-//   bool get isDenied => this == PermissionStatus.denied;
-//   bool get isPermanentlyDenied => this == PermissionStatus.permanentlyDenied;
-// }
-
-// class PermissionResult {
-//   final List<Permission> granted = [];
-//   final List<Permission> denied = [];
-//   final List<Permission> permanentlyDenied = [];
-//   final List<Permission> undeclared = [];
-// }
-
-// class PermissionConfig {
-//   final bool throwOnError;
-//   final bool enableLogging; // This seems to control your print statements
-//   final bool openSettingsOnPermanentDenial;
-//   final bool throwOnUndeclaredPermission;
-//   final int maxRetries;
-//   final Duration delayBetweenRetries;
-
-//   PermissionConfig({
-//     this.throwOnError = false,
-//     this.enableLogging = true, // Default based on your usage
-//     this.openSettingsOnPermanentDenial = true,
-//     this.throwOnUndeclaredPermission = false,
-//     this.maxRetries = 0,
-//     this.delayBetweenRetries = Duration.zero,
-//   });
-
-//   static PermissionConfig defaultConfig() => PermissionConfig();
-//   @override
-//   String toString(){
-//       return "PermissionConfig(throwOnError: $throwOnError, enableLogging: $enableLogging, ...)";
-//   }
-// }
-
-// extension PermissionMethods on Permission {
-//   Future<PermissionStatus> get status async => PermissionStatus.denied; // Stub
-//   Future<PermissionStatus> request() async => PermissionStatus.denied; // Stub
-// }
-
-// class PermissionHelper { // Stub
-//   static Map<String, String> getPermissionHelp(Permission permission) =>
-//       {'android': 'Android help for $permission', 'ios': 'iOS help for $permission'};
-// }
-
-// Future<void> openAppSettings() async { // Stub
-//   _logger.info("Opening app settings (stub)");
-// }

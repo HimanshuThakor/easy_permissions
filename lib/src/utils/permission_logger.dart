@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../flutter_easy_permission_manager.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 extension PermissionNameExtension on Permission {
   /// Converts "Permission.camera" → "camera"

@@ -26,7 +26,7 @@ Future<void> main(List<String> args) async {
 
   final permissionNames = results['permissions'] as List<String>;
   if (permissionNames.isEmpty) {
-    print('❌ No permissions specified. Use -p or --permissions');
+    stdout.write('❌ No permissions specified. Use -p or --permissions');
     _printUsage(parser);
     exit(1);
   }
@@ -38,13 +38,14 @@ Future<void> main(List<String> args) async {
 }
 
 void _printUsage(ArgParser parser) {
-  print('Flutter Easy Permission Manager - Auto Injection CLI\n');
-  print('Usage: dart run auto_inject_permissions.dart [options]\n');
-  print('Options:');
-  print(parser.usage);
-  print('\nExamples:');
-  print('  dart run auto_inject_permissions.dart -p camera,microphone');
-  print('  dart run auto_inject_permissions.dart -p location --android-only');
+  stdout.write('Flutter Easy Permission Manager - Auto Injection CLI\n');
+  stdout.write('Usage: dart run auto_inject_permissions.dart [options]\n');
+  stdout.write('Options:');
+  stdout.write(parser.usage);
+  stdout.write('\nExamples:');
+  stdout.write('  dart run auto_inject_permissions.dart -p camera,microphone');
+  stdout.write(
+      '  dart run auto_inject_permissions.dart -p location --android-only');
 }
 
 /// Permission mapping (simple)
@@ -76,7 +77,8 @@ final Map<String, Map<String, String>> _permissionMap = {
 
 Future<void> _injectPermissions(
     List<String> names, bool androidOnly, bool iosOnly) async {
-  print('🔧 Starting auto-injection for ${names.length} permissions...\n');
+  stdout
+      .write('🔧 Starting auto-injection for ${names.length} permissions...\n');
 
   if (!iosOnly) {
     final manifestFile = File('android/app/src/main/AndroidManifest.xml');
@@ -87,12 +89,12 @@ Future<void> _injectPermissions(
         if (snippet != null && !content.contains(snippet)) {
           content =
               content.replaceFirst('</manifest>', '  $snippet\n</manifest>');
-          print('✅ Injected $name (Android)');
+          stdout.write('✅ Injected $name (Android)');
         }
       }
       manifestFile.writeAsStringSync(content);
     } else {
-      print('⚠️ AndroidManifest.xml not found.');
+      stdout.write('⚠️ AndroidManifest.xml not found.');
     }
   }
 
@@ -104,14 +106,14 @@ Future<void> _injectPermissions(
         final snippet = _permissionMap[name.toLowerCase()]?['ios'];
         if (snippet != null && !content.contains(snippet)) {
           content = content.replaceFirst('</dict>', '  $snippet\n</dict>');
-          print('✅ Injected $name (iOS)');
+          stdout.write('✅ Injected $name (iOS)');
         }
       }
       plistFile.writeAsStringSync(content);
     } else {
-      print('⚠️ Info.plist not found.');
+      stdout.write('⚠️ Info.plist not found.');
     }
   }
 
-  print('\n📊 Injection completed!');
+  stdout.write('\n📊 Injection completed!');
 }
