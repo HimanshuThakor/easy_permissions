@@ -1,18 +1,20 @@
 # 📖 Flutter Easy Permissions Manager
 
-A simple wrapper around [`permission_handler`](https://pub.dev/packages/permission_handler) that makes requesting permissions in Flutter apps **easy and developer-friendly**.  
+A simple wrapper around [`permission_handler`](https://pub.dev/packages/permission_handler) that makes requesting permissions in Flutter apps **easy and developer-friendly**.
 
-- 🚀 Request multiple permissions with a single call  
-- ⚡ Provides clear error messages when `AndroidManifest.xml` or `Info.plist` entries are missing  
-- 🛡️ Helps you avoid common mistakes when handling permissions  
+- 🚀 Request multiple permissions with a single call
+- ⚡ Provides clear error messages when `AndroidManifest.xml` or `Info.plist` entries are missing
+- 🛡️ Helps you avoid common mistakes when handling permissions
+- 🖥️ Prints **developer-friendly logs** with ready-to-copy fixes
 
 ---
 
 ## ✨ Features
-- Request **single or multiple permissions**  
-- Automatically checks if **permissions are declared properly** in Android/iOS configs  
-- Provides **ready-to-copy XML/Plist entries** when missing  
-- Clean and minimal API  
+- Request **single or multiple permissions**
+- Automatically checks if **permissions are declared properly** in Android/iOS configs
+- Provides **ready-to-copy XML/Plist entries** when missing
+- 🖥️ Logs **quick CLI fix command** to auto-inject missing permissions
+- Clean and minimal API
 
 ---
 
@@ -47,8 +49,7 @@ A simple wrapper around [`permission_handler`](https://pub.dev/packages/permissi
 ```dart
 final result = await EasyPermissions.request([
   Permission.camera,
-  Permission.microphone,
-  Permission.locationWhenInUse,
+  Permission.microphone
 ]);
 
 if (result.allGranted) {
@@ -56,4 +57,41 @@ if (result.allGranted) {
 } else {
   print("❌ Missing: ${result.denied}");
 }
+```
+---
+
+## ⚡ CLI Commands
+
+You can also run the injector manually without waiting for runtime errors.
+
+Inject specific permissions
+```log
+dart run flutter_easy_permission_manager:auto_inject_permissions -p camera,location
+
+```
+
+---
+
+## 🖥️ Developer Logs & Quick Fix
+
+When a required permission is **not declared**, the logger will print a detailed fix message:
+
+```log
+🚨 Missing Permission Declaration
+--------------------------------
+❌ Permission: camera
+
+👉 Android:
+<uses-permission android:name="android.permission.CAMERA"/>
+
+👉 iOS:
+<key>NSCameraUsageDescription</key>
+<string>App needs camera access.</string>
+
+👉 Quick fix:
+dart run flutter_easy_permission_manager:auto_inject_permissions -p camera,microphone
+--------------------------------
+
+```
+
 

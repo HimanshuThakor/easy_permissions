@@ -19,7 +19,7 @@ class AutoPermissionInjector {
     try {
       final projectRoot = findProjectRoot();
       if (projectRoot == null) {
-        print('❌ Could not find Flutter project root directory');
+        stdout.write('❌ Could not find Flutter project root directory');
         return false;
       }
 
@@ -40,7 +40,7 @@ class AutoPermissionInjector {
         return true;
       }
     } catch (e) {
-      print('❌ Failed to auto-inject permission $permission: $e');
+      stdout.write('❌ Failed to auto-inject permission $permission: $e');
     }
 
     return false;
@@ -231,7 +231,7 @@ class AutoPermissionInjector {
 
     final manifestFile = File(manifestPath);
     if (!manifestFile.existsSync()) {
-      print('⚠️ Android manifest not found: $manifestPath');
+      stdout.write('⚠️ Android manifest not found: $manifestPath');
       return false;
     }
 
@@ -256,7 +256,7 @@ class AutoPermissionInjector {
 
       return true;
     } catch (e) {
-      print('❌ Failed to inject Android permission: $e');
+      stdout.write('❌ Failed to inject Android permission: $e');
       return false;
     }
   }
@@ -275,7 +275,7 @@ class AutoPermissionInjector {
 
     final plistFile = File(plistPath);
     if (!plistFile.existsSync()) {
-      print('⚠️ iOS Info.plist not found: $plistPath');
+      stdout.write('⚠️ iOS Info.plist not found: $plistPath');
       return false;
     }
 
@@ -306,7 +306,7 @@ class AutoPermissionInjector {
 
       return true;
     } catch (e) {
-      print('❌ Failed to inject iOS permission: $e');
+      stdout.write('❌ Failed to inject iOS permission: $e');
       return false;
     }
   }
@@ -324,9 +324,8 @@ class AutoPermissionInjector {
       final manifestMatch = RegExp(r'<manifest[^>]*>').firstMatch(content);
       if (manifestMatch != null) {
         final insertPos = manifestMatch.end;
-        content = content.substring(0, insertPos) +
-            '\n    $marker\n    $androidPermission' +
-            content.substring(insertPos);
+        content =
+            '${content.substring(0, insertPos)}\n    $marker\n    $androidPermission${content.substring(insertPos)}';
       }
     } else {
       // Add to existing auto-generated section
@@ -336,10 +335,8 @@ class AutoPermissionInjector {
 
       if (match != null) {
         final existingPermissions = match.group(2)!;
-        final newSection = match.group(1)! +
-            existingPermissions +
-            '    $androidPermission\n    ' +
-            match.group(3)!;
+        final newSection =
+            '${match.group(1)!}$existingPermissions    $androidPermission\n    ${match.group(3)!}';
 
         content = content.replaceAll(regex, newSection);
       }
@@ -360,9 +357,8 @@ class AutoPermissionInjector {
       // Find the last </dict> and inject before it
       final lastDictIndex = content.lastIndexOf('</dict>');
       if (lastDictIndex != -1) {
-        content = content.substring(0, lastDictIndex) +
-            '\t$marker\n\t$iosPermission\n' +
-            content.substring(lastDictIndex);
+        content =
+            '${content.substring(0, lastDictIndex)}\t$marker\n\t$iosPermission\n${content.substring(lastDictIndex)}';
       }
     } else {
       // Add to existing auto-generated section
@@ -372,10 +368,8 @@ class AutoPermissionInjector {
 
       if (match != null) {
         final existingPermissions = match.group(2)!;
-        final newSection = match.group(1)! +
-            existingPermissions +
-            '\t$iosPermission\n\t' +
-            match.group(3)!;
+        final newSection =
+            '${match.group(1)!}$existingPermissions\t$iosPermission\n\t${match.group(3)!}';
 
         content = content.replaceAll(regex, newSection);
       }
@@ -400,25 +394,27 @@ class AutoPermissionInjector {
     List<String> platforms,
   ) {
     if (!_hasShownWarning) {
-      print('\n' + '=' * 60);
-      print('🔧 AUTO-PERMISSION INJECTION ACTIVATED');
-      print('=' * 60);
+      stdout.write('\n${'=' * 60}');
+      stdout.write('🔧 AUTO-PERMISSION INJECTION ACTIVATED');
+      stdout.write('=' * 60);
       _hasShownWarning = true;
     }
 
-    print(
+    stdout.write(
         '\n✅ Auto-injected $permission permission for: ${platforms.join(', ')}');
-    print('📁 Files updated:');
+    stdout.write('📁 Files updated:');
 
     if (platforms.contains('Android')) {
-      print('   • android/app/src/main/AndroidManifest.xml');
+      stdout.write('   • android/app/src/main/AndroidManifest.xml');
     }
     if (platforms.contains('iOS')) {
-      print('   • ios/Runner/Info.plist');
+      stdout.write('   • ios/Runner/Info.plist');
     }
 
-    print('\n⚠️  IMPORTANT: Please restart your app to apply the changes!');
-    print('💡 Tip: Add permissions manually to avoid runtime injection.\n');
+    stdout.write(
+        '\n⚠️  IMPORTANT: Please restart your app to apply the changes!');
+    stdout.write(
+        '💡 Tip: Add permissions manually to avoid runtime injection.\n');
   }
 
   /// Restore files from backup
@@ -442,13 +438,13 @@ class AutoPermissionInjector {
     if (manifestBackup.existsSync()) {
       final manifest = File(manifestBackup.path.replaceAll('.backup', ''));
       await manifestBackup.copy(manifest.path);
-      print('✅ Restored Android manifest from backup');
+      stdout.write('✅ Restored Android manifest from backup');
     }
 
     if (plistBackup.existsSync()) {
       final plist = File(plistBackup.path.replaceAll('.backup', ''));
       await plistBackup.copy(plist.path);
-      print('✅ Restored iOS Info.plist from backup');
+      stdout.write('✅ Restored iOS Info.plist from backup');
     }
   }
 
@@ -463,7 +459,7 @@ class AutoPermissionInjector {
     for (final backup in backupFiles) {
       if (backup.existsSync()) {
         await backup.delete();
-        print('🗑️ Cleaned backup: ${backup.path}');
+        stdout.write('🗑️ Cleaned backup: ${backup.path}');
       }
     }
   }

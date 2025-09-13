@@ -64,7 +64,7 @@ Future<void> main(List<String> args) async {
   final file = File("permissions.yaml");
 
   if (!await file.exists()) {
-    print("❌ No permissions.yaml file found in project root.");
+    stdout.write("❌ No permissions.yaml file found in project root.");
     exit(1);
   }
 
@@ -74,7 +74,7 @@ Future<void> main(List<String> args) async {
   final permissions = List<String>.from(yaml["permissions"] ?? []);
 
   if (permissions.isEmpty) {
-    print("⚠️ No permissions found in permissions.yaml.");
+    stdout.write("⚠️ No permissions found in permissions.yaml.");
     exit(0);
   }
 
@@ -87,7 +87,7 @@ Future<void> main(List<String> args) async {
       androidBuffer.writeln(mapping["android"]);
       iosBuffer.writeln(mapping["ios"]);
     } else {
-      print("⚠️ Unknown permission: $perm");
+      stdout.write("⚠️ Unknown permission: $perm");
     }
   }
 
@@ -102,11 +102,11 @@ Future<void> main(List<String> args) async {
         _injectAndroid(manifestContent, androidBuffer.toString());
 
     if (dryRun) {
-      print("\n📄 ANDROID MANIFEST PREVIEW ($manifestPath):\n");
+      stdout.write("\n📄 ANDROID MANIFEST PREVIEW ($manifestPath):\n");
       _printDiff(manifestContent, updatedManifest);
     } else {
       await manifestFile.writeAsString(updatedManifest);
-      print("✅ Updated $manifestPath");
+      stdout.write("✅ Updated $manifestPath");
     }
   }
 
@@ -120,18 +120,18 @@ Future<void> main(List<String> args) async {
     final updatedPlist = _injectIOS(plistContent, iosBuffer.toString());
 
     if (dryRun) {
-      print("\n📄 INFO.PLIST PREVIEW ($plistPath):\n");
+      stdout.write("\n📄 INFO.PLIST PREVIEW ($plistPath):\n");
       _printDiff(plistContent, updatedPlist);
     } else {
       await plistFile.writeAsString(updatedPlist);
-      print("✅ Updated $plistPath");
+      stdout.write("✅ Updated $plistPath");
     }
   }
 
   if (dryRun) {
-    print("\n🔍 Dry run complete. No files were modified.");
+    stdout.write("\n🔍 Dry run complete. No files were modified.");
   } else {
-    print("\n🎉 Permissions updated successfully!");
+    stdout.write("\n🎉 Permissions updated successfully!");
   }
 }
 
@@ -170,10 +170,10 @@ void _printDiff(String oldContent, String newContent) {
 
   for (int i = 0; i < newLines.length; i++) {
     if (i >= oldLines.length) {
-      print("+ ${newLines[i]}");
+      stdout.write("+ ${newLines[i]}");
     } else if (oldLines[i] != newLines[i]) {
-      print("- ${oldLines[i]}");
-      print("+ ${newLines[i]}");
+      stdout.write("- ${oldLines[i]}");
+      stdout.write("+ ${newLines[i]}");
     }
   }
 }

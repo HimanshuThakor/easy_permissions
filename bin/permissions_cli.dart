@@ -37,7 +37,7 @@ Future<void> main(List<String> args) async {
 
     final permissionNames = results['permissions'] as List<String>;
     if (permissionNames.isEmpty) {
-      print('❌ No permissions specified. Use -p or --permissions');
+      stdout.write('❌ No permissions specified. Use -p or --permissions');
       _printUsage(parser);
       exit(1);
     }
@@ -45,32 +45,32 @@ Future<void> main(List<String> args) async {
     final permissions = _parsePermissions(permissionNames);
     await _injectPermissions(permissions);
   } catch (e) {
-    print('❌ Error: $e');
+    stdout.write('❌ Error: $e');
     _printUsage(parser);
     exit(1);
   }
 }
 
 void _printUsage(ArgParser parser) {
-  print('Flutter Easy Permission Manager - Auto Injection CLI');
-  print('');
-  print('Usage: dart run auto_inject_permissions.dart [options]');
-  print('');
-  print('Options:');
-  print(parser.usage);
-  print('');
-  print('Examples:');
-  print('  # Inject camera and microphone permissions');
-  print('  dart run auto_inject_permissions.dart -p camera,microphone');
-  print('');
-  print('  # Inject location permission for Android only');
-  print('  dart run auto_inject_permissions.dart -p location --android-only');
-  print('');
-  print('  # Restore from backups');
-  print('  dart run auto_inject_permissions.dart --restore');
-  print('');
-  print('  # Clean backup files');
-  print('  dart run auto_inject_permissions.dart --clean');
+  stdout.write('Flutter Easy Permission Manager - Auto Injection CLI');
+  stdout.write('');
+  stdout.write('Usage: dart run auto_inject_permissions.dart [options]');
+  stdout.write('');
+  stdout.write('Options:');
+  stdout.write(parser.usage);
+  stdout.write('');
+  stdout.write('Examples:');
+  stdout.write('  # Inject camera and microphone permissions');
+  stdout.write('  dart run auto_inject_permissions.dart -p camera,microphone');
+  stdout.write('');
+  stdout.write('  # Inject location permission for Android only');
+  stdout.write('  dart run auto_inject_permissions.dart -p location --android-only');
+  stdout.write('');
+  stdout.write('  # Restore from backups');
+  stdout.write('  dart run auto_inject_permissions.dart --restore');
+  stdout.write('');
+  stdout.write('  # Clean backup files');
+  stdout.write('  dart run auto_inject_permissions.dart --clean');
 }
 
 List<Permission> _parsePermissions(List<String> permissionNames) {
@@ -85,23 +85,71 @@ List<Permission> _parsePermissions(List<String> permissionNames) {
         permissions.add(Permission.microphone);
         break;
       case 'location':
+      case 'locationwheninuse':
         permissions.add(Permission.locationWhenInUse);
         break;
+      case 'locationalways':
+        permissions.add(Permission.locationAlways);
+        break;
       case 'photos':
+      case 'photo':
         permissions.add(Permission.photos);
+        break;
+      case 'videos':
+        permissions.add(Permission.videos);
+        break;
+      case 'audio':
+        permissions.add(Permission.audio);
         break;
       case 'contacts':
         permissions.add(Permission.contacts);
+        break;
+      case 'calendar':
+        permissions.add(Permission.calendar);
+        break;
+      case 'reminders':
+        permissions.add(Permission.reminders);
+        break;
+      case 'sensors':
+      case 'activity':
+        permissions.add(Permission.sensors);
         break;
       case 'bluetooth':
         permissions.add(Permission.bluetooth);
         break;
       case 'notification':
+      case 'notifications':
         permissions.add(Permission.notification);
         break;
-      // Add more mappings as needed
+      case 'sms':
+        permissions.add(Permission.sms);
+        break;
+      case 'storage':
+        permissions.add(Permission.storage);
+        break;
+      case 'ignore-battery-optimizations':
+      case 'ignorebatteryoptimizations':
+        permissions.add(Permission.ignoreBatteryOptimizations);
+        break;
+      case 'system-alert-window':
+      case 'systemalertwindow':
+        permissions.add(Permission.systemAlertWindow);
+        break;
+      case 'request-install-packages':
+      case 'requestinstallpackages':
+        permissions.add(Permission.requestInstallPackages);
+        break;
+      case 'access-media-location':
+      case 'accessmedialocation':
+        permissions.add(Permission.accessMediaLocation);
+        break;
+      case 'nearby-wifi-devices':
+      case 'nearbywifidevices':
+        permissions.add(Permission.nearbyWifiDevices);
+        break;
+
       default:
-        print('⚠️  Unknown permission: $name');
+        stdout.write('⚠️  Unknown permission: $name');
     }
   }
 
@@ -109,8 +157,8 @@ List<Permission> _parsePermissions(List<String> permissionNames) {
 }
 
 Future<void> _injectPermissions(List<Permission> permissions) async {
-  print('🔧 Starting auto-injection for ${permissions.length} permissions...');
-  print('');
+  stdout.write('🔧 Starting auto-injection for ${permissions.length} permissions...');
+  stdout.write('');
 
   final results =
       await AutoPermissionInjector.injectMissingPermissions(permissions);
@@ -121,54 +169,54 @@ Future<void> _injectPermissions(List<Permission> permissions) async {
     final success = entry.value;
 
     if (success) {
-      print('✅ ${permission.toString().split('.').last}');
+      stdout.write('✅ ${permission.toString().split('.').last}');
       successCount++;
     } else {
-      print(
+      stdout.write(
           '⏭️  ${permission.toString().split('.').last} (already exists or failed)');
     }
   }
 
-  print('');
-  print('📊 Results: $successCount/${permissions.length} permissions injected');
+  stdout.write('');
+  stdout.write('📊 Results: $successCount/${permissions.length} permissions injected');
 
   if (successCount > 0) {
-    print('');
-    print('⚠️  IMPORTANT: Restart your app to apply the changes!');
-    print('📁 Check the following files for updates:');
-    print('   • android/app/src/main/AndroidManifest.xml');
-    print('   • ios/Runner/Info.plist');
+    stdout.write('');
+    stdout.write('⚠️  IMPORTANT: Restart your app to apply the changes!');
+    stdout.write('📁 Check the following files for updates:');
+    stdout.write('   • android/app/src/main/AndroidManifest.xml');
+    stdout.write('   • ios/Runner/Info.plist');
   }
 }
 
 Future<void> _restoreBackups() async {
-  print('🔄 Restoring manifest files from backup...');
+  stdout.write('🔄 Restoring manifest files from backup...');
 
   try {
     final projectRoot = AutoPermissionInjector.findProjectRoot();
     if (projectRoot != null) {
       await AutoPermissionInjector.restoreFromBackup(projectRoot);
-      print('✅ Backup restoration completed!');
+      stdout.write('✅ Backup restoration completed!');
     } else {
-      print('❌ Could not find Flutter project root');
+      stdout.write('❌ Could not find Flutter project root');
     }
   } catch (e) {
-    print('❌ Error during restoration: $e');
+    stdout.write('❌ Error during restoration: $e');
   }
 }
 
 Future<void> _cleanBackups() async {
-  print('🗑️ Cleaning backup files...');
+  stdout.write('🗑️ Cleaning backup files...');
 
   try {
     final projectRoot = AutoPermissionInjector.findProjectRoot();
     if (projectRoot != null) {
       await AutoPermissionInjector.cleanBackups(projectRoot);
-      print('✅ Backup cleanup completed!');
+      stdout.write('✅ Backup cleanup completed!');
     } else {
-      print('❌ Could not find Flutter project root');
+      stdout.write('❌ Could not find Flutter project root');
     }
   } catch (e) {
-    print('❌ Error during cleanup: $e');
+    stdout.write('❌ Error during cleanup: $e');
   }
 }
